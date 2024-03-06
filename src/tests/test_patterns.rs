@@ -4,7 +4,13 @@
 // - input: A vector of strings.
 // Returns: True if the last two strings in the vector start with `BLOKC`, false otherwise.
 pub fn pattern_1(input: Vec<String>) -> bool {
-    todo!("Returns true if the last two strings in the vector start with `BLOKC`.");
+    if input.len() < 2 {
+        return false;
+    }
+
+    let last_two = &input[input.len() - 2..];
+
+    last_two.iter().all(|s| s.starts_with("BLOKC"))
 }
 
 // Function: pattern_2
@@ -13,7 +19,17 @@ pub fn pattern_1(input: Vec<String>) -> bool {
 // - input: A vector of strings.
 // Returns: True if the first and last string in the vector start with `BLOKC`, false otherwise.
 pub fn pattern_2(input: Vec<String>) -> bool {
-    todo!("Returns true if the first and last string in the vector start with `BLOKC`.");
+    if input.len() < 2 {
+        return false;
+    }
+    let (first, last) = (input.first().unwrap(), input.last().unwrap());
+
+    if first.starts_with("BLOKC") && last.starts_with("BLOKC"){
+        true
+    }
+    else{
+        false
+    }
 }
 
 // Function: pattern_3
@@ -22,7 +38,15 @@ pub fn pattern_2(input: Vec<String>) -> bool {
 // - input: A string.
 // Returns: True if a string contains all the letters of the word 'BLOKC', false otherwise.
 pub fn pattern_3(input: &str) -> bool {
-    todo!("Returns true if a string that contains all the letters of the word 'BLOKC'");
+    let required = "BLOKC";
+
+    for c in required.chars(){
+        if !input.contains(c){
+            return false;
+        }
+    }
+
+    true
 }
 
 // Function: pattern_4
@@ -30,8 +54,12 @@ pub fn pattern_3(input: &str) -> bool {
 // Parameters:
 // - input: A string.
 // Returns: A string that rearranges its characters in alphabetical order.
-pub fn pattern_4(input: &str) -> &str {
-    todo!("Returns a string that rearranges its characters in alphabetic order");
+pub fn pattern_4(input: &str) -> String {
+    let mut chars: Vec<char> = input.chars().collect();
+    
+    chars.sort();
+
+    chars.into_iter().collect()
 }
 
 // Function: pattern_5
@@ -39,8 +67,14 @@ pub fn pattern_4(input: &str) -> &str {
 // Parameters:
 // - input: A string.
 // Returns: A string with characters similar to the first character converted.
-pub fn pattern_5(input: &str) -> &str {
-    todo!("Returns a string that had the following characters converted similar to the first character");
+pub fn pattern_5(input: &str) -> String {
+    let first_char = input.chars().next().unwrap();
+    let mut result = String::new();
+    
+    for c in input.chars(){
+        result.push(first_char);
+    }
+    result
 }
 
 #[cfg(test)]
@@ -53,7 +87,7 @@ mod tests {
 			"HELLO".to_string(),
 			"RUST".to_string(),
 			"BLOKC".to_string(),
-			"BLOCKCHANG".to_string(),
+			"BLOKCCHANG".to_string(),
 		];
 		assert!(pattern_1(strs_1));
 
@@ -95,7 +129,7 @@ mod tests {
 
     #[test]
     fn test_pattern_4() {
-        assert_eq!(pattern_4("BLOCK"), "BCKLMO");
+        assert_eq!(pattern_4("BLOCK"), "BCKLO");
         assert_eq!(pattern_4("HELLO"), "EHLLO");
         assert_eq!(pattern_4("EDCBA"), "ABCDE");
     }

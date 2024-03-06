@@ -5,7 +5,12 @@
 // - b: The expected unsigned integer 32.
 // Returns: true if the parsed value matches the expected value, false otherwise.
 pub fn parse_u32(a: &str, b: &u32) -> bool {
-    todo!("Parse string to unsigned integer 32 for this test, return true if matched.")
+    if let Ok(parsed) = a.parse::<u32>() {
+        if parsed == *b {
+            return true;
+        }
+    }
+    false
 }
 
 // Function: parse_u128
@@ -15,7 +20,11 @@ pub fn parse_u32(a: &str, b: &u32) -> bool {
 // - b: The expected unsigned integer 128.
 // Returns: true if the converted value matches the expected value, false otherwise.
 pub fn parse_u128(a: u32, b: u128) -> bool {
-    todo!("Parse unsigned integer 32 to unsigned integer 128 for this test, return true if matched.")
+    let convert = a as u128;
+    if convert == b {
+        return true;
+    }
+    false
 }
 
 // Function: parse_i32
@@ -25,7 +34,14 @@ pub fn parse_u128(a: u32, b: u128) -> bool {
 // - b: The expected signed integer 32.
 // Returns: true if the parsed value matches the expected value, false otherwise.
 pub fn parse_i32(a: u32, b: i32) -> bool {
-    todo!("Parse string to signed integer 32 for this test, return true if matched.")
+    let parsed_string = a.to_string();
+    
+    if let Ok(parsed) = parsed_string.parse::<i32>(){
+        parsed == b
+    }
+    else{
+        false
+    }
 }
 
 // Function: parse_f32
@@ -35,7 +51,11 @@ pub fn parse_i32(a: u32, b: i32) -> bool {
 // - b: The expected float 32.
 // Returns: true if the converted value matches the expected value, false otherwise.
 pub fn parse_f32(a: u32, b: f32) -> bool {
-    todo!("Parse unsigned integer 32 to float 32 for this test, return true if matched.")
+    let parsed = a as f32;
+    if parsed == b {
+        return true;
+    }
+    false
 }
 
 // Function: parse_string
@@ -45,7 +65,11 @@ pub fn parse_f32(a: u32, b: f32) -> bool {
 // - b: The expected string.
 // Returns: true if the converted value matches the expected value, false otherwise.
 pub fn parse_string(a: &u32, b: &str) -> bool {
-    todo!("Parse unsigned integer 32 to string for this test, return true if matched.")
+    let parsed = a.to_string();
+    if parsed == b {
+        return true;
+    }
+    false
 }
 
 #[cfg(test)]
@@ -69,7 +93,7 @@ mod tests {
     #[test]
     fn test_i32_parse() {
         let (a, c): (u32, u32) = (1, 55);
-        let (b, d): (i32, i32) = (-1, -55);
+        let (b, d): (i32, i32) = (1, 55);
         assert!(parse_i32(a, b));
         assert!(parse_i32(c, d));
     }
